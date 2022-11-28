@@ -1,378 +1,92 @@
-import random
-puak_trav= ['Romans', 'Galia', 'Vikings']
-roma = ['Imperian', 'Equites Cesaeris']
-roma_attack = [80, 125]
-roma_defend = [70, 85]
-roma_agility = [30, 40]
+import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
 
-galia = ['Swordman', 'Theutaes Thunder']
-galia_attack = [65, 95]
-galia_defend = [75, 85]
-galia_agility = [40, 60]
+sales = pd.read_csv("C:/BAHASA/New folder/supermarket_sales - Sheet1.csv")
+print(sales.info())
 
-vikings = ['Clubswinger', 'Teutonic Knight']
-viking_attack = [75, 100]
-viking_defend = [75, 100]
-viking_agility = [35, 55]
+sales.set_index('Invoice ID', inplace = True)
+sales['Date'] = pd.to_datetime(sales['Date'])
+sales['Time'] = pd.to_datetime(sales['Time'])
+sales['Year']= sales['Date'].dt.year
+sales['Month']= sales['Date'].dt.month
+sales['Quarter'] = sales['Date'].dt.quarter
+sales['Hour'] = sales['Time'].dt.hour
 
-print('Ketik Mulai_permainannya() untuk mulai permainan')
-#Login
-def Mulai_permainannya() :
-    id_1 = input('Create New Username:')
-    password_1 = input('Create New Password:')
-    print('\n NEW ACCOUNT CREATED')
-    id_2 = input('\nLogin to Your Acoount:')
-    password_2 = input('Your Password?:')
-#pilih puak
-    if id_2 == id_1 and password_2 == password_1 :
-        print('status_login = active')
-        print('\nWelcome back, ' + id_1,'!')
-        print('Choose your Puak! : ')
-        print('\nRomans', 'Galia', 'Vikings')
-        choose_puak = input()
-        if choose_puak == puak_trav[0] :
-            print('Imperians')
-            print('Attack : 80, Defend : 70, Agility : 30')
-            print('Equites Cesaeris')
-            print('Attack : 125, Defend : 85, Agility : 40')
-            banyak_fighter_1 = input('How many Imperians? :')
-            banyak_fighter_2 = input('How many Equites Cesaeris? :')
-            if int(banyak_fighter_1) > 100 or int(banyak_fighter_2) > 100 :
-                print('Too much soldier you can deploy!')
-                return Mulai_permainannya()
-            else :
-                total_attack = banyak_fighter_1 * (roma_attack[0] + (0.75 * roma_agility[0])) +  banyak_fighter_2 * (roma_attack[1] + (0.75 * roma_agility[1]))
-                print(total_attack)
-                print('Enemy choosing puak...')
-                choose_enemy = random.choice(puak_trav)
-                print('Enemy has chosen' , choose_enemy)
-                if choose_enemy == puak_trav[0] :
-                    print('Imperians')
-                    print('Attack : 80, Defend : 70, Agility : 30')
-                    print('Equites Cesaeris')
-                    print('Attack : 125, Defend : 85, Agility : 40')
-                    banyak_enemy_1 = random.randrange(1, 100)
-                    banyak_enemy_2 = random.randrange (1, 100)
-                    print('Enemy Imperians : ', banyak_enemy_1)
-                    print('Enemy Equites Cesaeris : ', banyak_enemy_2)
-                    total_defend = banyak_enemy_1 * (roma_defend[0] + (0.75 * roma_agility[0])) +  banyak_enemy_2 * (roma_defend[1] + (0.75 * roma_agility[1]))
-                    print('Enemy total defend : ', total_defend)
-                    print('To attack type SERANG')
-                    serang = input()
-                    if serang == 'SERANG' :
-                        pemenang = total_attack - total_defend
-                        if pemenang > 0 :
-                            print('impressed')
-                            print('Username :', id_1)
-                            print('Puak : Romans')
-                            print('TROOPS')
-                            print('Imperian : ', banyak_fighter_1)
-                            print('Equites Cecaris : ', banyak_fighter_2)
-                            print('Total attack : ', total_attack)
-                            print('Total defend : ', total_defend)
-                            print('Total kemenangan : ', round(total_attack/total_defend))
-                        else :
-                            print('loser')
-                            return Mulai_permainannya()
-                elif choose_enemy == puak_trav[1] :
-                    print('Swordman')
-                    print('Attack : 65, Defend : 75, Agility : 40')
-                    print('Theutaes Thunder')
-                    print('Attack : 95, Defend : 85, Agility : 60')
-                    banyak_enemy_1 = random.randrange(1, 100)
-                    banyak_enemy_2 = random.randrange (1, 100)
-                    print('Enemy Swordman : ', banyak_enemy_1)
-                    print('Enemy Theutaes Thunder : ', banyak_enemy_2)
-                    total_defend = banyak_enemy_1 * (galia_defend[0] + (0.75 * galia_agility[0])) +  banyak_enemy_2 * (galia_defend[1] + (0.75 * galia_agility[1]))
-                    print('Enemy total defend : ', total_defend)
-                    print('To attack type SERANG')
-                    serang = input()
-                    if serang == 'SERANG' :
-                        pemenang = total_attack - total_defend
-                        if pemenang > 0 :
-                            print('impressed')
-                            print('Username :', id_1)
-                            print('Puak : Galia')
-                            print('TROOPS')
-                            print('Swordman : ', banyak_fighter_1)
-                            print('Theutaes Thunder: ', banyak_fighter_2)
-                            print('Total attack : ', total_attack)
-                            print('Total defend : ', total_defend)
-                            print('Total kemenangan : ', round(total_attack/total_defend))
-                        else :
-                            print('loser')
-                            return Mulai_permainannya()
-                else :
-                    print('Clubswinger')
-                    print('Attack : 75, Defend : 75, Agility : 35')
-                    print('Teutonic Knight')
-                    print('Attack : 100, Defend : 100, Agility : 55')
-                    banyak_enemy_1 = random.randrange(1, 100)
-                    banyak_enemy_2 = random.randrange (1, 100)
-                    print('Enemy Clubswinger : ', banyak_enemy_1)
-                    print('Enemy Teutonic Knight : ', banyak_enemy_2)
-                    total_defend = banyak_enemy_1 * (viking_defend[0] + (0.75 * viking_agility[0])) +  banyak_enemy_2 * (viking_defend[1] + (0.75 * viking_agility[1]))
-                    print('Enemy total defend : ', total_defend)
-                    print('To attack type SERANG')
-                    serang = input()
-                    if serang == 'SERANG' :
-                        pemenang = total_attack - total_defend
-                        if pemenang > 0 :
-                            print('impressed')
-                            print('Username :', id_1)
-                            print('Puak : Vikings')
-                            print('TROOPS')
-                            print('Clubswinger : ', banyak_fighter_1)
-                            print('Teutonic Knight: ', banyak_fighter_2)
-                            print('Total attack : ', total_attack)
-                            print('Total defend : ', total_defend)
-                            print('Total kemenangan : ', round(total_attack/total_defend))
-                        else :
-                            print('loser')
-                            return Mulai_permainannya()
+sales['Time'] = sales['Time'].dt.strftime('%H:%M')
 
-        elif choose_puak == puak_trav[1] :
-            print('Swordman')
-            print('Attack : 65, Defend : 75, Agility : 40')
-            print('Theutaes Thunder')
-            print('Attack : 95, Defend : 85, Agility : 60')
-            banyak_fighter_1 = input('How many Swordman? :')
-            banyak_fighter_2 = input('How many Theutaes Thunder? :')
-            if int(banyak_fighter_1) > 100 or int(banyak_fighter_2) > 100 :
-                print('Too much soldier you can deploy!')
-                return Mulai_permainannya()
-            else :
-                total_attack = banyak_fighter_1 * (galia_attack[0] + (0.75 * galia_agility[0])) +  banyak_fighter_2 * (galia_attack[1] + (0.75 * galia_agility[1]))
-                print(total_attack)
-                print('Enemy choosing puak...')
-                choose_enemy = random.choice(puak_trav)
-                print('Enemy has chosen' , choose_enemy)
-                if choose_enemy == puak_trav[0] :
-                    print('Imperians')
-                    print('Attack : 80, Defend : 70, Agility : 30')
-                    print('Equites Cesaeris')
-                    print('Attack : 125, Defend : 85, Agility : 40')
-                    banyak_enemy_1 = random.randrange(1, 100)
-                    banyak_enemy_2 = random.randrange (1, 100)
-                    print('Enemy Imperians : ', banyak_enemy_1)
-                    print('Enemy Equites Cesaeris : ', banyak_enemy_2)
-                    total_defend = banyak_enemy_1 * (roma_defend[0] + (0.75 * roma_agility[0])) +  banyak_enemy_2 * (roma_defend[1] + (0.75 * roma_agility[1]))
-                    print('Enemy total defend : ', total_defend)
-                    print('To attack type SERANG')
-                    serang = input()
-                    if serang == 'SERANG' :
-                        pemenang = total_attack - total_defend
-                        if pemenang > 0 :
-                            print('impressed')
-                            print('Username :', id_1)
-                            print('Puak : Galia')
-                            print('TROOPS')
-                            print('Swordman : ', banyak_fighter_1)
-                            print('Theutaes Thunder : ', banyak_fighter_2)
-                            print('Total attack : ', total_attack)
-                            print('Total defend : ', total_defend)
-                            print('Total kemenangan : ', round(total_attack/total_defend))
-                        else :
-                            print('loser')
-                            return Mulai_permainannya()
-                elif choose_enemy == puak_trav[1] :
-                    print('Swordman')
-                    print('Attack : 65, Defend : 75, Agility : 40')
-                    print('Theutaes Thunder')
-                    print('Attack : 95, Defend : 85, Agility : 60')
-                    banyak_enemy_1 = random.randrange(1, 100)
-                    banyak_enemy_2 = random.randrange (1, 100)
-                    print('Enemy Swordman : ', banyak_enemy_1)
-                    print('Enemy Theutaes Thunder : ', banyak_enemy_2)
-                    total_defend = banyak_enemy_1 * (galia_defend[0] + (0.75 * galia_agility[0])) +  banyak_enemy_2 * (galia_defend[1] + (0.75 * galia_agility[1]))
-                    print('Enemy total defend : ', total_defend)
-                    print('To attack type SERANG')
-                    serang = input()
-                    if serang == 'SERANG' :
-                        pemenang = total_attack - total_defend
-                        if pemenang > 0 :
-                            print('impressed')
-                            print('Username :', id_1)
-                            print('Puak : Galia')
-                            print('TROOPS')
-                            print('Swordman : ', banyak_fighter_1)
-                            print('Theutaes Thunder: ', banyak_fighter_2)
-                            print('Total attack : ', total_attack)
-                            print('Total defend : ', total_defend)
-                            print('Total kemenangan : ', round(total_attack/total_defend))
-                        else :
-                            print('loser')
-                            return Mulai_permainannya()
-                else  :
-                    print('Clubswinger')
-                    print('Attack : 75, Defend : 75, Agility : 35')
-                    print('Teutonic Knight')
-                    print('Attack : 100, Defend : 100, Agility : 55')
-                    banyak_enemy_1 = random.randrange(1, 100)
-                    banyak_enemy_2 = random.randrange (1, 100)
-                    print('Enemy Clubswinger : ', banyak_enemy_1)
-                    print('Enemy Teutonic Knight : ', banyak_enemy_2)
-                    total_defend = banyak_enemy_1 * (viking_defend[0] + (0.75 * viking_agility[0])) +  banyak_enemy_2 * (viking_defend[1] + (0.75 * viking_agility[1]))
-                    print('Enemy total defend : ', total_defend)
-                    print('To attack type SERANG')
-                    serang = input()
-                    if serang == 'SERANG' :
-                        pemenang = total_attack - total_defend
-                        if pemenang > 0 :
-                            print('impressed')
-                            print('Username :', id_1)
-                            print('Puak : Galia')
-                            print('TROOPS')
-                            print('Swordman : ', banyak_fighter_1)
-                            print('Theutaes Thunder: ', banyak_fighter_2)
-                            print('Total attack : ', total_attack)
-                            print('Total defend : ', total_defend)
-                            print('Total kemenangan : ', round(total_attack/total_defend))
-                        else :
-                            print('loser')
-                            return Mulai_permainannya()
-        
-        else : 
-            print('Clubswinger')
-            print('Attack : 75, Defend : 75, Agility : 35')
-            print('Teutonic Knight')
-            print('Attack : 100, Defend : 100, Agility : 55')
-            banyak_fighter_1 = input('How many Clubswinger? :')
-            banyak_fighter_2 = input('How many Teutonic Knight? :')
-            if int(banyak_fighter_1) > 100 or int(banyak_fighter_2) > 100 :
-                print('Too much soldier you can deploy!')
-                return Mulai_permainannya()
-            else :
-                total_attack = banyak_fighter_1 * (viking_attack[0] + (0.75 * viking_agility[0])) +  banyak_fighter_2 * (viking_attack[1] + (0.75 * viking_agility[1]))
-                print(total_attack)
-                print('Enemy choosing puak...')
-                choose_enemy = random.choice(puak_trav)
-                print('Enemy has chosen' , choose_enemy)
-                if choose_enemy == puak_trav[0] :
-                    print('Imperians')
-                    print('Attack : 80, Defend : 70, Agility : 30')
-                    print('Equites Cesaeris')
-                    print('Attack : 125, Defend : 85, Agility : 40')
-                    banyak_enemy_1 = random.randrange(1, 100)
-                    banyak_enemy_2 = random.randrange (1, 100)
-                    print('Enemy Imperians : ', banyak_enemy_1)
-                    print('Enemy Equites Cesaeris : ', banyak_enemy_2)
-                    total_defend = banyak_enemy_1 * (roma_defend[0] + (0.75 * roma_agility[0])) +  banyak_enemy_2 * (roma_defend[1] + (0.75 * roma_agility[1]))
-                    print('Enemy total defend : ', total_defend)
-                    print('To attack type SERANG')
-                    serang = input()
-                    if serang == 'SERANG' :
-                        pemenang = total_attack - total_defend
-                        if pemenang > 0 :
-                            print('impressed')
-                            print('Username :', id_1)
-                            print('Puak : Vikings')
-                            print('TROOPS')
-                            print('Clubswinger : ', banyak_fighter_1)
-                            print('Teutonic Knight : ', banyak_fighter_2)
-                            print('Total attack : ', total_attack)
-                            print('Total defend : ', total_defend)
-                            print('Total kemenangan : ', round(total_attack/total_defend))
-                        else :
-                            print('loser')
-                            return Mulai_game()
-                elif choose_enemy == puak_trav[1] :
-                    print('Swordman')
-                    print('Attack : 65, Defend : 75, Agility : 40')
-                    print('Theutaes Thunder')
-                    print('Attack : 95, Defend : 85, Agility : 60')
-                    banyak_enemy_1 = random.randrange(1, 100)
-                    banyak_enemy_2 = random.randrange (1, 100)
-                    print('Enemy Swordman : ', banyak_enemy_1)
-                    print('Enemy Theutaes Thunder : ', banyak_enemy_2)
-                    total_defend = banyak_enemy_1 * (galia_defend[0] + (0.75 * galia_agility[0])) +  banyak_enemy_2 * (galia_defend[1] + (0.75 * galia_agility[1]))
-                    print('Enemy total defend : ', total_defend)
-                    print('To attack type SERANG')
-                    serang = input()
-                    if serang == 'SERANG' :
-                        pemenang = total_attack - total_defend
-                        if pemenang > 0 :
-                            print('impressed')
-                            print('Username :', id_1)
-                            print('Puak : Vikings')
-                            print('TROOPS')
-                            print('Clubswinger : ', banyak_fighter_1)
-                            print('Teutonic Knight: ', banyak_fighter_2)
-                            print('Total attack : ', total_attack)
-                            print('Total defend : ', total_defend)
-                            print('Total kemenangan : ', round(total_attack/total_defend))
-                        else :
-                            print('loser')
-                            return Mulai_permainannya()
-                else  :
-                    print('Clubswinger')
-                    print('Attack : 75, Defend : 75, Agility : 35')
-                    print('Teutonic Knight')
-                    print('Attack : 100, Defend : 100, Agility : 55')
-                    banyak_enemy_1 = random.randrange(1, 100)
-                    banyak_enemy_2 = random.randrange (1, 100)
-                    print('Enemy Clubswinger : ', banyak_enemy_1)
-                    print('Enemy Teutonic Knight : ', banyak_enemy_2)
-                    total_defend = banyak_enemy_1 * (viking_defend[0] + (0.75 * viking_agility[0])) +  banyak_enemy_2 * (viking_defend[1] + (0.75 * viking_agility[1]))
-                    print('Enemy total defend : ', total_defend)
-                    print('To attack type SERANG')
-                    serang = input()
-                    if serang == 'SERANG' :
-                        pemenang = total_attack - total_defend
-                        if pemenang > 0 :
-                            print('impressed')
-                            print('Username :', id_1)
-                            print('Puak : Vikings')
-                            print('TROOPS')
-                            print('Clubswinger : ', banyak_fighter_1)
-                            print('Teutonic Knight: ', banyak_fighter_2)
-                            print('Total attack : ', total_attack)
-                            print('Total defend : ', total_defend)
-                            print('Total kemenangan : ', round(total_attack/total_defend))
-                        else :
-                            print('loser')
-                            return Mulai_permainannya()        
-    else : 
-        print('Login Failed, Please Check Your Id or Password!')
+sales.sort_values('Date', inplace = True)
 
-#CONTOH HASIL OUTPUT DARI RUN CODE :
+print(sales['Month'].unique())
 
-#Create New Username: Rezi
-#Create New Password: Fahlevi
-# NEW ACCOUNT CREATED
-#Login to Your Acoount: Rezi
-#Your Password?: Fahlevi
-#status_login = active
+sales['Month'].replace([1,2,3], ['Des', 'Jan', 'Feb'], inplace = True)
+print(sales.head(3))
 
-#Welcome back, Rezi !
-#Choose your Puak! : 
+print(sales.describe())
 
-#Romans Galia Vikings
-# Vikings
-#Clubswinger
-#Attack : 75, Defend : 75, Agility : 35
-#Teutonic Knight
-#Attack : 100, Defend : 100, Agility : 55
-#How many Clubswinger? : 80
-#How many Teutonic Knight? : 7
-#9088.75
-#fighter choosing puak...
-#fighter has chosen Romans
-#Imperians
-#Attack : 80, Defend : 70, Agility : 30
-#Equites Cesaeris
-#Attack : 125, Defend : 85, Agility : 40
-#fighter Imperians :  16
-#fighter Equites Cesaeris :  43
-#fighter total defend :  6425.0
-#To attack type SERANG
-# SERANG
-#impressed
-#Username : Rezi
-#Puak : Vikings
-#TROOPS
-#Clubswinger :  80
-#Teutonic Knight :  7
-#Total attack :  9088.75
-#Total defend :  6425.0
-#Total kemenangan :  1
+sales.groupby('City')['Quantity'].agg(['sum','mean','median','std']).round(decimals = 2).sort_values('sum', ascending = False)
+
+sales.groupby('Customer type')['Quantity'].agg(['sum','mean','median','std']).round(decimals = 2).sort_values('sum', ascending = False)
+
+sales.groupby('Gender')['Quantity'].agg(['sum','mean','median','std']).round(decimals = 2).sort_values('sum', ascending = False)
+
+sales.groupby('Product line')['Quantity'].agg(['sum','mean','median','std']).round(decimals = 2).sort_values('sum', ascending = False)
+
+sales['Month'].value_counts().loc[['Des', 'Jan', 'Feb']]
+
+print(sales['Hour'].value_counts().sort_index())
+
+def rating_level(rate):
+    if rate >= 7.5:
+        return 'positive'
+    elif rate >= 6.5:
+        return 'neutral'
+    else:
+        return 'negative'
+
+print(sales['Rating'].apply(rating_level).value_counts())
+
+sales['Rating Level'] = sales['Rating'].apply(rating_level)
+
+sns.set_theme()
+sns.catplot(kind = 'count',data = sales, x ='Rating Level')
+
+sns.catplot(kind = 'count',data = sales, x ='Rating Level', col = 'Branch')
+
+sns.catplot(kind = 'bar', data = sales, x ='Month', y = 'Quantity', aspect = 1.2, estimator = sum, ci = None)
+plt.xlabel('')
+plt.title('Total Quantity by Month (Q1)')
+
+sns.relplot(kind = 'line', data = sales, x ='Hour', y = 'Quantity', aspect = 2, hue = 'Gender', ci = False)
+plt.xlabel('Hour of Day')
+plt.title('Average Sales by Hour of Day (24 hrs)')
+plt.ylim(0,24)
+
+sns.relplot(kind = 'line', data = sales, x ='Hour', y = 'Quantity', aspect = 2)
+plt.xlabel('Hour of Day')
+plt.title('Average Sales by Hour of Day (24 hrs)')
+plt.ylim(0,24)
+
+sales_by_date = sales.groupby('Date')['Quantity'].agg(Quantity='sum').sort_index()
+
+sales_by_date['5 Day Quantity'] = sales_by_date['Quantity'].rolling(5).sum()
+sales_by_date['5 Day Quantity Average'] = sales_by_date['Quantity'].rolling(5).mean().round(decimals = 2)
+sales_by_date['15 Day Quantity'] = sales_by_date['Quantity'].rolling(15).sum()
+sales_by_date['15 Day Quantity Average'] = sales_by_date['Quantity'].rolling(15).mean().round(decimals = 2)
+
+sales_by_date.tail()
+
+sns.set_style('white')
+
+sns.histplot(data = sales_by_date, x = 'Quantity', binwidth = 10, kde = True)
+sns.despine()
+
+sns.set_style('darkgrid')
+sns.relplot(kind = 'line', data = sales_by_date, x ='Date', y = 'Quantity', aspect = 2.5)
+plt.ylim(0,140)
+sns.relplot(kind = 'line', data = sales_by_date, x ='Date', y = '5 Day Quantity Average', aspect = 2.5)
+plt.ylim(0,140)
+sns.relplot(kind = 'line', data = sales_by_date, x ='Date', y = '15 Day Quantity Average', aspect = 2.5)
+plt.ylim(0,140)
+
+sales_by_date.sort_values('Quantity', ascending = False).head(10
